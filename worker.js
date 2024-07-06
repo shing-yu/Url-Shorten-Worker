@@ -16,17 +16,19 @@ const protect_keylist = [
   "password",
 ]
 
-let index_html = "https://crazypeace.github.io/Url-Shorten-Worker/" + config.theme + "/index.html"
-let result_html = "https://crazypeace.github.io/Url-Shorten-Worker/" + config.theme + "/result.html"
+let index_html = "https://raw.githubusercontent.com/shing-yu/Url-Shorten-Worker/main/" + config.theme + "/index.html"
+let result_html = "https://raw.githubusercontent.com/shing-yu/Url-Shorten-Worker/main/" + config.theme + "/result.html"
 
 const html404 = `<!DOCTYPE html>
   <html>
   <body>
     <h1>404 Not Found.</h1>
     <p>The url you visit is not found.</p>
-    <p> <a href="https://github.com/crazypeace/Url-Shorten-Worker/" target="_self">Fork me on GitHub</a> </p>
+    <p>你所访问的链接不存在，请检查。</p>
   </body>
   </html>`
+
+// <p> <a href="https://github.com/crazypeace/Url-Shorten-Worker/" target="_self">Fork me on GitHub</a> </p>
 
 let response_header = {
   "Content-type": "text/html;charset=UTF-8;application/json",
@@ -294,11 +296,10 @@ async function handleRequest(request) {
   // 如果path为空, 即直接访问本worker
   // If visit this worker directly (no path)
   if (!path) {
-    return Response.redirect("https://zelikk.blogspot.com/search/label/Url-Shorten-Worker", 302)
-    /* new Response(html404, {
+    return new Response(html404, {
       headers: response_header,
       status: 404
-    }) */
+    });
   }
 
   // 如果path符合password 显示操作页面index.html
